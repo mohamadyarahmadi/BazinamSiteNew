@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bazinam.web", "Bazinam.web\Bazinam.web.csproj", "{DBED0434-4C91-421B-9B32-3480632F9E90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bazinam.DomainClasses", "Bazinam.DomainClasses\Bazinam.DomainClasses.csproj", "{9F758786-3E5C-4D3A-BE31-F7190EE1F227}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bazinam.ServiceLayer", "Bazinam.ServiceLayer\Bazinam.ServiceLayer.csproj", "{5BBB8C92-F773-402A-B84E-06EDD6E698E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bazinam.ViewModel", "Bazinam.ViewModel\Bazinam.ViewModel.csproj", "{C89CE17B-9C50-45E0-A685-5DE3F2CFED8A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bazinam.DataAccessLayer", "Bazinam.DataAccessLayer\Bazinam.DataAccessLayer.csproj", "{39D9C447-092F-4B80-AB8F-D17F45B6831B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bazinam.Utilities", "Bazinam.Utilities\Bazinam.Utilities.csproj", "{EA993D3A-7D78-4C8F-9651-BE4BF53DBEDB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DBED0434-4C91-421B-9B32-3480632F9E90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBED0434-4C91-421B-9B32-3480632F9E90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBED0434-4C91-421B-9B32-3480632F9E90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBED0434-4C91-421B-9B32-3480632F9E90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F758786-3E5C-4D3A-BE31-F7190EE1F227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F758786-3E5C-4D3A-BE31-F7190EE1F227}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F758786-3E5C-4D3A-BE31-F7190EE1F227}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F758786-3E5C-4D3A-BE31-F7190EE1F227}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BBB8C92-F773-402A-B84E-06EDD6E698E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BBB8C92-F773-402A-B84E-06EDD6E698E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BBB8C92-F773-402A-B84E-06EDD6E698E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BBB8C92-F773-402A-B84E-06EDD6E698E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C89CE17B-9C50-45E0-A685-5DE3F2CFED8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C89CE17B-9C50-45E0-A685-5DE3F2CFED8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C89CE17B-9C50-45E0-A685-5DE3F2CFED8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C89CE17B-9C50-45E0-A685-5DE3F2CFED8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39D9C447-092F-4B80-AB8F-D17F45B6831B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39D9C447-092F-4B80-AB8F-D17F45B6831B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39D9C447-092F-4B80-AB8F-D17F45B6831B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39D9C447-092F-4B80-AB8F-D17F45B6831B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA993D3A-7D78-4C8F-9651-BE4BF53DBEDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA993D3A-7D78-4C8F-9651-BE4BF53DBEDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA993D3A-7D78-4C8F-9651-BE4BF53DBEDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA993D3A-7D78-4C8F-9651-BE4BF53DBEDB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
