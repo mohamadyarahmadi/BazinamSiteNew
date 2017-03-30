@@ -32,11 +32,17 @@ namespace Bazinam.ViewModel
 
     public class CommentMV
     {
-
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         public int CommentID { get; set; }
-
+        [Required, MaxLength(150), DisplayName("عنوان")]
         public string Name { get; set; }
+        [Required]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+        [Required, MaxLength(500), DisplayName("نظر")]
         public string comment { get; set; }
+        [Required]
+        public bool state { get; set; }
+        public string ReleaseDate { get; set; }
     }
 }

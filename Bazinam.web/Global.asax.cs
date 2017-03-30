@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Http;
 using Bazinam.DataAccessLayer;
+using Bazinam.web.App_Start;
+
 namespace Bazinam.web
 {
     public class Global : HttpApplication
@@ -20,6 +22,7 @@ namespace Bazinam.web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext,
                     Bazinam.DataAccessLayer.Migrations.Configuration>());
+            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
         }
     }
 }

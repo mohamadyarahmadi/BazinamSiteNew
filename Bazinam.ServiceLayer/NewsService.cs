@@ -40,13 +40,13 @@ namespace Bazinam.ServiceLayer
                       PictureID = x.PictureID,
                       PicName = x.PicName,
                       PicUrl = x.PicUrl
-                  }).OrderBy(row => row.PictureID).Skip((page - 1) * 10).Take(pageSize).ToListAsync();
+                  }).OrderBy(row => row.PictureID).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
            return PictureVM;
        }
 
-        public Picture GetImage(int id)
+        public async Task<Picture> GetImage(int id)
         {
-           return _picture.Find(id);
+           return await _unitOfWork.FindAsyncc<Picture>(id);
         }
 
         public async Task<int> TotalOfNews()
@@ -150,6 +150,46 @@ namespace Bazinam.ServiceLayer
             var deletedNews = await _unitOfWork.FindAsyncc<News>(id);
             _news.Remove(deletedNews);
             return await _unitOfWork.SaveAllChangesAsync();
+        }
+
+        public async Task<IList<CommentMV>> GetComments(int pageSize, int page)
+        {
+            var Comments = await _comments
+                 .Select(x => new CommentMV()
+                 {
+                     CommentID = x.CommentID,
+                     Name = x.Name,
+                     comment = x.comment.Substring(0, x.comment.Length > 50 ? 50 : x.comment.Length),
+                     ReleaseDate = x.ReleaseDate.ToString()
+                 }).OrderBy(row => row.CommentID).Skip((page - 1) * 10).Take(pageSize).ToListAsync();
+            return Comments;
+        }
+
+        public async Task<CommentMV> GetComment(int id)
+        {
+            var result = await _comments.Where(i => i.CommentID == id)
+                    .Select(x => new Bazinam.ViewModel.CommentMV()
+                    {
+                        CommentID = x.CommentID,
+                        Name = x.Name,
+                        comment = x.comment.Substring(0, x.comment.Length > 50 ? 50 : x.comment.Length),
+                        state = x.IsAllowed,
+                        ReleaseDate = x.ReleaseDate.ToString()
+                    }).FirstAsync();
+            return result;
+        }
+
+        public async Task<int> ChangeCommentState(int id, bool state)
+        {
+            var editedComment =await _unitOfWork.FindAsyncc<Comment>(id);
+            editedComment.IsAllowed = state;
+            _unitOfWork.Entry(editedComment).State = System.Data.Entity.EntityState.Modified;
+            return await _unitOfWork.SaveAllChangesAsync();
+        }
+
+        public async Task<int> TotalOfComment()
+        {
+            return await _comments.CountAsync();
         }
     }
 }

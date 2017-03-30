@@ -23,7 +23,7 @@ namespace Bazinam.web.Areas.Admin.Controllers
         {
             return View();
         }
-        public virtual async Task<JsonResult> GetNewsPicWithPagging([Bind(Prefix = "pageSize")]int pageSize = 10, [Bind(Prefix = "page")]int page = 1)
+        public virtual async Task<JsonResult> GetNewsPicWithPagging([Bind(Prefix = "pageSize")]int pageSize , [Bind(Prefix = "page")]int page )
         {
             /*using (SystemDbContext context = new SystemDbContext())
             {
@@ -50,10 +50,10 @@ namespace Bazinam.web.Areas.Admin.Controllers
                 pic = await context.Pictures.FindAsync(id);
                 return base.File(pic.PicSourceBytes, "image/jpeg");
             }*/
-            byte[] buffer = _newsService.GetImage((int)id).PicSourceBytes;
+            byte[] buffer = (await _newsService.GetImage((int)id)).PicSourceBytes;
             return base.File(buffer, "image/jpeg");
         }
-        public virtual async Task<JsonResult> GetNewsWithPagging([Bind(Prefix = "pageSize")]int pageSize = 10, [Bind(Prefix = "page")]int page = 1)
+        public virtual async Task<JsonResult> GetNewsWithPagging([Bind(Prefix = "pageSize")]int pageSize, [Bind(Prefix = "page")]int page)
         {
             /*using (SystemDbContext context = new SystemDbContext())
             {
@@ -288,13 +288,31 @@ namespace Bazinam.web.Areas.Admin.Controllers
                      context.News.Remove(deletedNews);
                      await context.SaveChangesAsync();
                  }*/
-                _newsService.Delete(id);
+                await _newsService.Delete(id);
                 return RedirectToAction("/Index");
             }
             catch
             {
                 return View();
             }
+        }
+        public virtual async Task<JsonResult> GetComments([Bind(Prefix = "pageSize")]int pageSize, [Bind(Prefix = "page")]int page)
+        {
+            var total1 = await _newsService.TotalOfComment();
+            var commentVM = await _newsService.GetComments(pageSize, page);
+            return Json(new { total = total1, data = commentVM }, JsonRequestBehavior.AllowGet);
+        }
+
+        public virtual async Task<ActionResult> GetComment(int id)
+        {
+            var result = await _newsService.GetComment((int)id);
+            return View(result);
+        }
+        [HttpPost]
+        public virtual async Task<JsonResult> ChangeCommentState(int id, bool state)
+        {
+            var commentVM = await _newsService.ChangeCommentState(id,state);
+            return Json(new { data = commentVM==1?"Success":"fiald" }, JsonRequestBehavior.AllowGet);
         }
     }
 }

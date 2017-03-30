@@ -13,7 +13,7 @@ namespace Bazinam.ServiceLayer.Contracts
    {
         Task<int> TotalOfPicture();
        Task<IList<PictureMV>> GetNewsPicWithPagging(int pageSize, int page = 1);
-       Picture GetImage(int id);
+        Task<Picture> GetImage(int id);
         Task<int> TotalOfNews();
         Task<IList<NewsMV>> GetNewsWithPagging(int pageSize, int page = 1);
        Task<int> CreateNews(NewsMV _new,List<string> picList ,string tempPicPath);
@@ -22,6 +22,9 @@ namespace Bazinam.ServiceLayer.Contracts
        Task<NewsMV> GetNews(int id);
        Task<int> EditNews( NewsMV _new);
        Task<int> Delete(int id);
-
-   }
+       Task<IList<CommentMV>> GetComments(int pageSize,int page);
+       Task<CommentMV> GetComment(int id);
+       Task<int> ChangeCommentState(int id, bool state);
+        Task<int> TotalOfComment();
+    }
 }

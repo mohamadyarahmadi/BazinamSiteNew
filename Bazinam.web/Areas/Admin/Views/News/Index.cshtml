@@ -32,6 +32,7 @@
                                                     total: "total"
                                                 }
                                             },
+                                            editable: "inline",
                                             sortable: true,
                                             groupable: false,
                                             columns: [{
@@ -51,7 +52,8 @@
                                             {
                                                 template: "<a class='btn btn-info' href='@Url.Action(MVC.Admin.News.Details())/#:data.NewsID#'>نمایش</a><br/><a  class='btn btn-primary' href='@Url.Action(MVC.Admin.News.Edit())/#:data.NewsID#'>ویرایش</a><br/><a class='btn btn-danger' href='@Url.Action(MVC.Admin.News.Delete())/#:data.NewsID#'>حذف</a>",
                                                 title: "ویرایش"
-                                            }]
+                                            },
+                                            { command: [{ name: "edit", text: { edit: "ویرایش", update: "بروزرسانی", cancel: "انصراف" } }, { name: "destroy", text:"حذف"}], title: "&nbsp;", width: "250px" }]
 
                                         });
            
