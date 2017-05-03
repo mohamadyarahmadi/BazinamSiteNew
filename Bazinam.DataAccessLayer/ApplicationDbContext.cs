@@ -18,6 +18,7 @@ namespace Bazinam.DataAccessLayer
         public DbSet<News> News { get; set; }
         public DbSet<Picture>   Pictures  { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<CommentAnswer> Answer { get; set; }
         public ApplicationDbContext()
             : base("SystemDbContext")
         {

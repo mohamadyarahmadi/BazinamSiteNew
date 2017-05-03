@@ -9,7 +9,7 @@ namespace Bazinam.DataAccessLayer.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(Bazinam.DataAccessLayer.ApplicationDbContext context)

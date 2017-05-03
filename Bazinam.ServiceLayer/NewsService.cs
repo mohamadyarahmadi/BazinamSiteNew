@@ -12,28 +12,30 @@ using Bazinam.Utilities;
 
 namespace Bazinam.ServiceLayer
 {
-   public class NewsService :INewsService
+    public class NewsService : INewsService
     {
         private readonly IDbSet<News> _news;
         private readonly IDbSet<Picture> _picture;
         private readonly IDbSet<Comment> _comments;
+        private readonly IDbSet<CommentAnswer> _commentsAnswer;
         private readonly IUnitOfWork _unitOfWork;
 
-       public NewsService(IUnitOfWork unitOfWork)
-       {
-           _unitOfWork = unitOfWork;
-           _news = unitOfWork.Set<News>();
-           _picture = unitOfWork.Set<Picture>();
-           _comments = unitOfWork.Set<Comment>();
-       }
+        public NewsService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+            _news = unitOfWork.Set<News>();
+            _picture = unitOfWork.Set<Picture>();
+            _comments = unitOfWork.Set<Comment>();
+            _commentsAnswer = unitOfWork.Set<CommentAnswer>();
+        }
 
-       public async Task<int> TotalOfPicture()
-       {
+        public async Task<int> TotalOfPicture()
+        {
             return await _picture.CountAsync();
         }
 
-       public async Task<IList<PictureMV>> GetNewsPicWithPagging(int pageSize=10, int page = 1)
-       {
+        public async Task<IList<PictureMV>> GetNewsPicWithPagging(int pageSize = 10, int page = 1)
+        {
             var PictureVM = await _picture
                   .Select(x => new PictureMV()
                   {
@@ -41,17 +43,17 @@ namespace Bazinam.ServiceLayer
                       PicName = x.PicName,
                       PicUrl = x.PicUrl
                   }).OrderBy(row => row.PictureID).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
-           return PictureVM;
-       }
+            return PictureVM;
+        }
 
         public async Task<Picture> GetImage(int id)
         {
-           return await _unitOfWork.FindAsyncc<Picture>(id);
+            return await _unitOfWork.FindAsyncc<Picture>(id);
         }
 
         public async Task<int> TotalOfNews()
         {
-            return  await _unitOfWork.Set<News>().CountAsync();
+            return await _unitOfWork.Set<News>().CountAsync();
         }
 
         public async Task<IList<NewsMV>> GetNewsWithPagging(int pageSize, int page = 1)
@@ -80,7 +82,7 @@ namespace Bazinam.ServiceLayer
             return result;
         }
 
-        public async Task<int> CreateNews(NewsMV _new,List<string> picList,string tempPicPath )
+        public async Task<int> CreateNews(NewsMV _new, List<string> picList, string tempPicPath)
         {
             News news = new News()
             {
@@ -114,10 +116,10 @@ namespace Bazinam.ServiceLayer
             foreach (var file in files)
             {
                 using (System.IO.FileStream _FileStream =
-                            new System.IO.FileStream(tempPicPath+file.FileName, System.IO.FileMode.Create,
+                            new System.IO.FileStream(tempPicPath + file.FileName, System.IO.FileMode.Create,
                                   System.IO.FileAccess.Write))
                 {
-                    await _FileStream.WriteAsync(file.FileBuffer,0, file.FileBuffer.Length);
+                    await _FileStream.WriteAsync(file.FileBuffer, 0, file.FileBuffer.Length);
                     _FileStream.Close();
                 }
             }
@@ -131,8 +133,8 @@ namespace Bazinam.ServiceLayer
                 System.IO.File.Delete(fileNames);
             }
         }
-        
-        public async Task<int> EditNews( NewsMV _new)
+
+        public async Task<int> EditNews(NewsMV _new)
         {
             var editedNews = new News()
             {
@@ -159,6 +161,7 @@ namespace Bazinam.ServiceLayer
                  {
                      CommentID = x.CommentID,
                      Name = x.Name,
+                     Email = x.Email,
                      comment = x.comment.Substring(0, x.comment.Length > 50 ? 50 : x.comment.Length),
                      ReleaseDate = x.ReleaseDate.ToString()
                  }).OrderBy(row => row.CommentID).Skip((page - 1) * 10).Take(pageSize).ToListAsync();
@@ -181,15 +184,52 @@ namespace Bazinam.ServiceLayer
 
         public async Task<int> ChangeCommentState(int id, bool state)
         {
-            var editedComment =await _unitOfWork.FindAsyncc<Comment>(id);
+            var editedComment = await _unitOfWork.FindAsyncc<Comment>(id);
             editedComment.IsAllowed = state;
             _unitOfWork.Entry(editedComment).State = System.Data.Entity.EntityState.Modified;
+            return await _unitOfWork.SaveAllChangesAsync();
+        }
+
+        public async Task<int> DeleteComment(int id)
+        {
+            var delete = await _unitOfWork.FindAsyncc<Comment>(id);
+            _comments.Remove(delete);
             return await _unitOfWork.SaveAllChangesAsync();
         }
 
         public async Task<int> TotalOfComment()
         {
             return await _comments.CountAsync();
+        }
+
+        public async Task<CommentAnswerVM> GetCommentAnswer(int id)
+        {
+            var result = await _commentsAnswer.Where(i => i.CommentAnswerID == id)
+                    .Select(x => new Bazinam.ViewModel.CommentAnswerVM()
+                    {
+                        CommentAnswerID = x.CommentAnswerID,
+                        Answer = x.AnswerComment,
+                        UserID = x.ApplicationUserID
+                    }).FirstAsync();
+            return result;
+        }
+        public async Task<int> EditCommentAnswer(int id, CommentAnswerVM answer)
+        {
+            var editedAnswer = new CommentAnswer()
+            {
+                CommentAnswerID = answer.CommentAnswerID,
+                AnswerComment = answer.Answer,
+                ApplicationUserID = answer.UserID
+            };
+            _unitOfWork.Entry(editedAnswer).State = System.Data.Entity.EntityState.Modified;
+                return await _unitOfWork.SaveAllChangesAsync();
+        }
+
+        public async Task<int> DeleteCommentAnswer(int id)
+        {
+            var deletedAnswer = await _unitOfWork.FindAsyncc<CommentAnswer>(id);
+            _commentsAnswer.Remove(deletedAnswer);
+            return await _unitOfWork.SaveAllChangesAsync();
         }
     }
 }

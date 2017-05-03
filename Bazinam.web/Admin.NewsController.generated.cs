@@ -128,6 +128,7 @@ namespace Bazinam.web.Areas.Admin.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
+            public readonly string News = "News";
             public readonly string GetNewsPicWithPagging = "GetNewsPicWithPagging";
             public readonly string GetImage = "GetImage";
             public readonly string GetNewsWithPagging = "GetNewsWithPagging";
@@ -143,6 +144,7 @@ namespace Bazinam.web.Areas.Admin.Controllers
         public class ActionNameConstants
         {
             public const string Index = "Index";
+            public const string News = "News";
             public const string GetNewsPicWithPagging = "GetNewsPicWithPagging";
             public const string GetImage = "GetImage";
             public const string GetNewsWithPagging = "GetNewsWithPagging";
@@ -155,6 +157,16 @@ namespace Bazinam.web.Areas.Admin.Controllers
         }
 
 
+        static readonly ActionParamsClass_News s_params_News = new ActionParamsClass_News();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_News NewsParams { get { return s_params_News; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_News
+        {
+            public readonly string page = "page";
+            public readonly string start = "start";
+            public readonly string limit = "limit";
+        }
         static readonly ActionParamsClass_GetNewsPicWithPagging s_params_GetNewsPicWithPagging = new ActionParamsClass_GetNewsPicWithPagging();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_GetNewsPicWithPagging GetNewsPicWithPaggingParams { get { return s_params_GetNewsPicWithPagging; } }
@@ -269,6 +281,31 @@ namespace Bazinam.web.Areas.Admin.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
             IndexOverride(callInfo);
             return callInfo;
+        }
+
+        [NonAction]
+        partial void NewsOverride(T4MVC_System_Web_Mvc_JsonResult callInfo, int page, int start, int limit);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.JsonResult> News(int page, int start, int limit)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.News);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "start", start);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "limit", limit);
+            NewsOverride(callInfo, page, start, limit);
+            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.JsonResult);
+        }
+
+        [NonAction]
+        partial void NewsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> News()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.News);
+            NewsOverride(callInfo);
+            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
         }
 
         [NonAction]

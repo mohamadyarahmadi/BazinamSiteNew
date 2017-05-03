@@ -1,0 +1,37 @@
+﻿@using GleamTech.Web.Mvc
+@using GleamTech.FileUltimate
+
+@{
+    var fileManager = new FileManager
+    {
+        Width = 800,
+        Height = 600,
+        Resizable = true
+    };
+
+    var rootFolder = new FileManagerRootFolder
+    {
+        Name = "Root Folder",
+        Location = "~/"
+    };
+
+    rootFolder.AccessControls.Add(new FileManagerAccessControl
+    {
+        Path = @"\",
+        AllowedPermissions = FileManagerPermissions.Full
+    });
+
+    fileManager.RootFolders.Add(rootFolder);
+}
+@section Script{
+    @Html.RenderCss(fileManager)
+    @Html.RenderJs(fileManager)
+
+}
+<div style="direction:ltr">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            @Html.RenderControl(fileManager)
+        </div>
+    </div>
+</div>

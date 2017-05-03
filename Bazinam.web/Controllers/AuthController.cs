@@ -1,16 +1,28 @@
-﻿using Bazinam.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
+﻿using Bazinam.DomainClasses;
+using Bazinam.ServiceLayer.Contracts;
+using Bazinam.ViewModel;
+using Microsoft.Owin.Security;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity.Owin;
+using System.Threading.Tasks;
 
 namespace Bazinam.web.Controllers
 {
     public partial class AuthController : Controller
     {
         public const string authCookieName = "ApplicationCookie";
+        private readonly IApplicationUserManager _userManager;
+        private readonly IApplicationSignInManager _signInManager;
+        private readonly IAuthenticationManager _authenticationManager;
+
+        public AuthController(IApplicationUserManager userManager, IApplicationSignInManager applicationSignInManager,
+            IAuthenticationManager authenticationManager)
+        {
+            _userManager = userManager;
+            _signInManager = applicationSignInManager;
+            _authenticationManager = authenticationManager;
+        }
         // GET: Auth
         public virtual ActionResult Index()
         {
@@ -27,34 +39,35 @@ namespace Bazinam.web.Controllers
             return View(model);
         }
         [HttpPost]
-        public virtual ActionResult LogIn(LoginVM model)
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public virtual async Task<ActionResult> Login(LoginVM model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(model);
             }
 
-            // Don't do this in production!
-            if (model.Email == "admin@admin.com" && model.Password == "password")
+            var result = SignInStatus.Failure;
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user != null)
             {
-                var identity = new ClaimsIdentity(new[] {
-                new Claim(ClaimTypes.Name, "Esmaeil"),
-                new Claim(ClaimTypes.Email, "a@b.com"),
-                new Claim(ClaimTypes.Country, "Iran")
-            },
-                    authCookieName);
-
-                var ctx = Request.GetOwinContext();
-                var authManager = ctx.Authentication;
-
-                authManager.SignIn(identity);
-
-                return Redirect(GetRedirectUrl(model.ReturnUrl));
+                result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, shouldLockout: true);
             }
 
-            // user authN failed
-            ModelState.AddModelError("", "Invalid email or password");
-            return View();
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return redirectToLocal(returnUrl);
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                case SignInStatus.RequiresVerification:
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
+                default:
+                    ModelState.AddModelError("", "ورود به سیستم موفقیت آمیز نبود");
+                    return View(model);
+            }
         }
 
         private string GetRedirectUrl(string returnUrl)
@@ -73,6 +86,35 @@ namespace Bazinam.web.Controllers
 
             authManager.SignOut(authCookieName);
             return RedirectToAction("index", "home");
+        }
+        // POST: /Account/Register
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public virtual async Task<ActionResult> Register(RegisterVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    return RedirectToAction("Index", "Home");
+                }
+
+            }
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+        private ActionResult redirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            return RedirectToAction("");// MVC.AdminPanel.Dashboard.ActionNames.Index, MVC.AdminPanel.Dashboard.Name, new { area = MVC.Admin.Name });
         }
     }
 }

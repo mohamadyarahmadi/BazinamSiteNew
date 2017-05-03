@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "CommentList";
+}
+@section Script {
+    <link href="~/Content/kendo.common.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/kendo.default.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/kendo.default.mobile.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/kendo.all.min.js"></script>
+}
+<div>
+    <div id="window">
+        <div id="grid"> </div>
+        <script>
+                                     $(document).ready(function () {
+                                        $("#grid").kendoGrid({
+                                            groupable: true,
+                                            pageable: true,
+                                            sortable: true,
+                                            dataSource: {
+                                                type: "json",
+                                                transport: {
+                                                    read: {
+                                                        url: '@Url.Action(MVC.Admin.Comment.GetComments())'
+                                                    }
+                                                },
+                                                pageSize: 4,
+                                                serverPaging: true,
+                                                serverFiltering: true,
+                                                serverGrouping: true,
+                                                serverAggregates: true,
+                                                schema: {
+                                                    data: "data",
+                                                    total: "total"
+                                                }
+                                            },
+                                            editable: "inline",
+                                            sortable: true,
+                                            groupable: false,
+                                            columns: [{
+
+                                                field: "Name",
+                                                title: "نام نظر دهنده"
+
+                                            },
+                                            {
+                                                field: "Email",
+                                                title:" ایمیل نظر دهنده"
+                                            },
+                                            {
+                                                field: "comment",
+                                                title: " ایمیل نظر دهنده"
+                                            }
+                                            ,
+                                            {
+                                                field:"ReleaseDate",
+                                                title:"تاریخ "
+                                            },
+                                            {
+                                                template: "<a class='btn btn-info' href='@Url.Action(MVC.Admin.Comment.Details())/#:data.CommentID#'>نمایش</a><br /><a class='btn btn-info' href='@Url.Action(MVC.Admin.Comment.Answer())/#:data.CommentID#'>پاسخ به این نظر</a><br/><a  class='btn btn-primary' href='@Url.Action(MVC.Admin.Comment.Edit())/#:data.CommentID#'>ویرایش</a><br/><a class='btn btn-danger' href='@Url.Action(MVC.Admin.Comment.Delete())/#:data.CommentID#'>حذف</a>",
+                                                title: "ویرایش"
+                                            }
+                                          // , { command: [{ name: "edit", text: { edit: "ویرایش", update: "بروزرسانی", cancel: "انصراف" } }, { name: "destroy", text:"حذف"}], title: "&nbsp;", width: "250px" }
+                                          ]
+                                        });
+
+
+                                    });
+        </script>
+    </div>
+</div>
+

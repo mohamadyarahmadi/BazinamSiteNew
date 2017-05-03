@@ -25,6 +25,11 @@ namespace Bazinam.ServiceLayer.Contracts
        Task<IList<CommentMV>> GetComments(int pageSize,int page);
        Task<CommentMV> GetComment(int id);
        Task<int> ChangeCommentState(int id, bool state);
+        Task<int> DeleteComment(int id);
         Task<int> TotalOfComment();
+        Task<CommentAnswerVM> GetCommentAnswer(int id);
+        Task<int> EditCommentAnswer(int id, CommentAnswerVM answer);
+        Task<int> DeleteCommentAnswer(int id);
+
     }
 }

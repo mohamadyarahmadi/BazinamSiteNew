@@ -40,7 +40,7 @@ namespace Bazinam.DomainClasses
 
     public class Comment
     {
-        
+
         public int CommentID { get; set; }
 
         public string Name { get; set; }
@@ -49,5 +49,14 @@ namespace Bazinam.DomainClasses
         public bool IsAllowed { get; set; }
         public DateTime ReleaseDate { get; set; }
         public virtual News NewsModel { get; set; }
+    }
+    public class CommentAnswer
+    {
+        public int CommentAnswerID { get; set; }
+        public string AnswerComment { get; set; }
+        public int ApplicationUserID { get; set; }
+        public virtual ApplicationUser User { get; set; }
+        public int CommentID { get; set; }
+        public virtual Comment comment { get; set; }
     }
 }

@@ -45,4 +45,12 @@ namespace Bazinam.ViewModel
         public bool state { get; set; }
         public string ReleaseDate { get; set; }
     }
+    public class CommentAnswerVM
+    {
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
+        public int CommentID { get; set; }
+        public int CommentAnswerID { get; set; }
+        public string Answer { get; set; }
+        public int UserID { get; set; }
+    }
 }

@@ -23,7 +23,39 @@ namespace Bazinam.web.Areas.Admin.Controllers
         {
             return View();
         }
-        public virtual async Task<JsonResult> GetNewsPicWithPagging([Bind(Prefix = "pageSize")]int pageSize , [Bind(Prefix = "page")]int page )
+        [AllowAnonymous]
+        [HttpGet]
+        public virtual async Task<JsonResult> News([Bind(Prefix = "page")]int page, [Bind(Prefix = "start")]int start, [Bind(Prefix = "limit")]int limit)
+        {
+            var NewsVM = await _newsService.GetNewsWithPagging(10, 1);
+            
+            string title = "salam";
+            for(int i = 0; i < 100; i++) {
+                var News = new NewsMV() {
+                    NewsID = i,
+                    Title = NewsVM[0].Title +"-"+ i,
+                    Content = NewsVM[0].Content,
+                    ReleaseDate = NewsVM[0].ReleaseDate
+                };                
+                NewsVM.Add(News);
+            }
+            return Json(new
+            {
+                total = 100,
+                data = NewsVM.Skip(start).Take(limit)
+
+            }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPut]
+        public virtual async Task<ActionResult> News()
+        {
+            return Json(new
+            {
+                data= "success"
+
+            }, JsonRequestBehavior.AllowGet);
+        }
+        public virtual async Task<JsonResult> GetNewsPicWithPagging([Bind(Prefix = "pageSize")]int pageSize, [Bind(Prefix = "page")]int page)
         {
             /*using (SystemDbContext context = new SystemDbContext())
             {
@@ -90,7 +122,7 @@ namespace Bazinam.web.Areas.Admin.Controllers
                     }).FirstAsync();
                 return View(result);
             }*/
-            var result =await _newsService.GetNews((int)id);
+            var result = await _newsService.GetNews((int)id);
             return View(result);
         }
 
@@ -142,7 +174,7 @@ namespace Bazinam.web.Areas.Admin.Controllers
                          context.News.Add(news);
                          await context.SaveChangesAsync();
                      }*/
-                    var files = (List<string>)Session["NewsFile"]??new List<string>();
+                    var files = (List<string>)Session["NewsFile"] ?? new List<string>();
                     await _newsService.CreateNews(_new, files, Server.MapPath("~/Areas/Admin/TempPic/"));
                     Session["NewsFile"] = null;
                 }
@@ -153,6 +185,7 @@ namespace Bazinam.web.Areas.Admin.Controllers
                 return View();
             }
         }
+        [HttpPost]
         public virtual ActionResult UploadNewsPic(IEnumerable<HttpPostedFileBase> files)
         {
             // The Name of the Upload component is "files"
@@ -177,7 +210,7 @@ namespace Bazinam.web.Areas.Admin.Controllers
             }
 
             // Return an empty string to signify success
-            return Content("");
+            return Content("{data:'success'}");
         }
         public virtual async Task<ActionResult> RemovePic(string[] fileNames)
         {
@@ -290,29 +323,11 @@ namespace Bazinam.web.Areas.Admin.Controllers
                  }*/
                 await _newsService.Delete(id);
                 return RedirectToAction("/Index");
-            }
+                }
             catch
             {
                 return View();
             }
-        }
-        public virtual async Task<JsonResult> GetComments([Bind(Prefix = "pageSize")]int pageSize, [Bind(Prefix = "page")]int page)
-        {
-            var total1 = await _newsService.TotalOfComment();
-            var commentVM = await _newsService.GetComments(pageSize, page);
-            return Json(new { total = total1, data = commentVM }, JsonRequestBehavior.AllowGet);
-        }
-
-        public virtual async Task<ActionResult> GetComment(int id)
-        {
-            var result = await _newsService.GetComment((int)id);
-            return View(result);
-        }
-        [HttpPost]
-        public virtual async Task<JsonResult> ChangeCommentState(int id, bool state)
-        {
-            var commentVM = await _newsService.ChangeCommentState(id,state);
-            return Json(new { data = commentVM==1?"Success":"fiald" }, JsonRequestBehavior.AllowGet);
         }
     }
 }

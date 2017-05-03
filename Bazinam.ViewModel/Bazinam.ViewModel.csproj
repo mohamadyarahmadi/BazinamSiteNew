@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LoginPageVM.cs" />
     <Compile Include="LoginVM.cs" />
     <Compile Include="NewsVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

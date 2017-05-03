@@ -3,10 +3,25 @@ namespace Bazinam.DataAccessLayer.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.CommentAnswers",
+                c => new
+                    {
+                        CommentAnswerID = c.Int(nullable: false, identity: true),
+                        AnswerComment = c.String(),
+                        ApplicationUserID = c.Int(nullable: false),
+                        CommentID = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.CommentAnswerID)
+                .ForeignKey("dbo.Comments", t => t.CommentID, cascadeDelete: true)
+                .ForeignKey("dbo.Users", t => t.ApplicationUserID, cascadeDelete: true)
+                .Index(t => t.ApplicationUserID)
+                .Index(t => t.CommentID);
+            
             CreateTable(
                 "dbo.Comments",
                 c => new
@@ -45,29 +60,6 @@ namespace Bazinam.DataAccessLayer.Migrations
                         PicSourceBytes = c.Binary(),
                     })
                 .PrimaryKey(t => t.PictureID);
-            
-            CreateTable(
-                "dbo.Roles",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 256),
-                    })
-                .PrimaryKey(t => t.Id)
-                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
-            
-            CreateTable(
-                "dbo.UserRoles",
-                c => new
-                    {
-                        UserId = c.Int(nullable: false),
-                        RoleId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.UserId, t.RoleId })
-                .ForeignKey("dbo.Roles", t => t.RoleId, cascadeDelete: true)
-                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: true)
-                .Index(t => t.UserId)
-                .Index(t => t.RoleId);
             
             CreateTable(
                 "dbo.Users",
@@ -115,6 +107,29 @@ namespace Bazinam.DataAccessLayer.Migrations
                 .Index(t => t.UserId);
             
             CreateTable(
+                "dbo.UserRoles",
+                c => new
+                    {
+                        UserId = c.Int(nullable: false),
+                        RoleId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.Roles", t => t.RoleId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.RoleId);
+            
+            CreateTable(
+                "dbo.Roles",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 256),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
+            
+            CreateTable(
                 "dbo.PictureNews",
                 c => new
                     {
@@ -131,31 +146,36 @@ namespace Bazinam.DataAccessLayer.Migrations
         
         public override void Down()
         {
+            DropForeignKey("dbo.UserRoles", "RoleId", "dbo.Roles");
+            DropForeignKey("dbo.CommentAnswers", "ApplicationUserID", "dbo.Users");
             DropForeignKey("dbo.UserRoles", "UserId", "dbo.Users");
             DropForeignKey("dbo.UserLogins", "UserId", "dbo.Users");
             DropForeignKey("dbo.UserClaims", "UserId", "dbo.Users");
-            DropForeignKey("dbo.UserRoles", "RoleId", "dbo.Roles");
+            DropForeignKey("dbo.CommentAnswers", "CommentID", "dbo.Comments");
             DropForeignKey("dbo.PictureNews", "News_NewsID", "dbo.News");
             DropForeignKey("dbo.PictureNews", "Picture_PictureID", "dbo.Pictures");
             DropForeignKey("dbo.Comments", "NewsModel_NewsID", "dbo.News");
             DropIndex("dbo.PictureNews", new[] { "News_NewsID" });
             DropIndex("dbo.PictureNews", new[] { "Picture_PictureID" });
+            DropIndex("dbo.Roles", "RoleNameIndex");
+            DropIndex("dbo.UserRoles", new[] { "RoleId" });
+            DropIndex("dbo.UserRoles", new[] { "UserId" });
             DropIndex("dbo.UserLogins", new[] { "UserId" });
             DropIndex("dbo.UserClaims", new[] { "UserId" });
             DropIndex("dbo.Users", "UserNameIndex");
-            DropIndex("dbo.UserRoles", new[] { "RoleId" });
-            DropIndex("dbo.UserRoles", new[] { "UserId" });
-            DropIndex("dbo.Roles", "RoleNameIndex");
             DropIndex("dbo.Comments", new[] { "NewsModel_NewsID" });
+            DropIndex("dbo.CommentAnswers", new[] { "CommentID" });
+            DropIndex("dbo.CommentAnswers", new[] { "ApplicationUserID" });
             DropTable("dbo.PictureNews");
+            DropTable("dbo.Roles");
+            DropTable("dbo.UserRoles");
             DropTable("dbo.UserLogins");
             DropTable("dbo.UserClaims");
             DropTable("dbo.Users");
-            DropTable("dbo.UserRoles");
-            DropTable("dbo.Roles");
             DropTable("dbo.Pictures");
             DropTable("dbo.News");
             DropTable("dbo.Comments");
+            DropTable("dbo.CommentAnswers");
         }
     }
 }

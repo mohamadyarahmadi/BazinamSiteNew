@@ -28,9 +28,6 @@ namespace Bazinam.web.Controllers
     public partial class AuthController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public AuthController() { }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected AuthController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -65,6 +62,20 @@ namespace Bazinam.web.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogIn);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Login()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Login);
+            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Register()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
+            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public AuthController Actions { get { return MVC.Auth; } }
@@ -83,7 +94,9 @@ namespace Bazinam.web.Controllers
         {
             public readonly string Index = "Index";
             public readonly string LogIn = "LogIn";
+            public readonly string Login = "Login";
             public readonly string LogOut = "LogOut";
+            public readonly string Register = "Register";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -91,7 +104,9 @@ namespace Bazinam.web.Controllers
         {
             public const string Index = "Index";
             public const string LogIn = "LogIn";
+            public const string Login = "Login";
             public const string LogOut = "LogOut";
+            public const string Register = "Register";
         }
 
 
@@ -102,6 +117,22 @@ namespace Bazinam.web.Controllers
         public class ActionParamsClass_LogIn
         {
             public readonly string returnUrl = "returnUrl";
+        }
+        static readonly ActionParamsClass_Login s_params_Login = new ActionParamsClass_Login();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Login LoginParams { get { return s_params_Login; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Login
+        {
+            public readonly string model = "model";
+            public readonly string returnUrl = "returnUrl";
+        }
+        static readonly ActionParamsClass_Register s_params_Register = new ActionParamsClass_Register();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Register RegisterParams { get { return s_params_Register; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Register
+        {
             public readonly string model = "model";
         }
         static readonly ViewsClass s_views = new ViewsClass();
@@ -114,7 +145,9 @@ namespace Bazinam.web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string Login = "Login";
             }
+            public readonly string Login = "~/Views/Auth/Login.cshtml";
         }
     }
 
@@ -147,15 +180,16 @@ namespace Bazinam.web.Controllers
         }
 
         [NonAction]
-        partial void LogInOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Bazinam.ViewModel.LoginVM model);
+        partial void LoginOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Bazinam.ViewModel.LoginVM model, string returnUrl);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult LogIn(Bazinam.ViewModel.LoginVM model)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Login(Bazinam.ViewModel.LoginVM model, string returnUrl)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogIn);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Login);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            LogInOverride(callInfo, model);
-            return callInfo;
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
+            LoginOverride(callInfo, model, returnUrl);
+            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
         }
 
         [NonAction]
@@ -167,6 +201,18 @@ namespace Bazinam.web.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogOut);
             LogOutOverride(callInfo);
             return callInfo;
+        }
+
+        [NonAction]
+        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Bazinam.ViewModel.RegisterVM model);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Register(Bazinam.ViewModel.RegisterVM model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            RegisterOverride(callInfo, model);
+            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
         }
 
     }

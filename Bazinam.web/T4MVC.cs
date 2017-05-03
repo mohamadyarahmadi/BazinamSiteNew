@@ -30,6 +30,8 @@ public static partial class MVC
     static readonly AdminClass s_Admin = new AdminClass();
     public static AdminClass Admin { get { return s_Admin; } }
     public static Bazinam.web.Controllers.AuthController Auth = new Bazinam.web.Controllers.T4MVC_AuthController();
+    public static T4MVC.RegisterController Register = new T4MVC.RegisterController();
+    public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
 namespace T4MVC
@@ -38,6 +40,9 @@ namespace T4MVC
     public class AdminClass
     {
         public readonly string Name = "Admin";
+        public Bazinam.web.Areas.Admin.Controllers.CommentController Comment = new Bazinam.web.Areas.Admin.Controllers.T4MVC_CommentController();
+        public Bazinam.web.Areas.Admin.Controllers.DashboardController Dashboard = new Bazinam.web.Areas.Admin.Controllers.T4MVC_DashboardController();
+        public Bazinam.web.Areas.Admin.Controllers.FileManagerController FileManager = new Bazinam.web.Areas.Admin.Controllers.T4MVC_FileManagerController();
         public Bazinam.web.Areas.Admin.Controllers.NewsController News = new Bazinam.web.Areas.Admin.Controllers.T4MVC_NewsController();
         public T4MVC.Admin.SharedController Shared = new T4MVC.Admin.SharedController();
     }
@@ -93,8 +98,19 @@ namespace Links
         public const string UrlPath = "~/Scripts";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+        public static readonly string affix_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/affix.min.js") ? Url("affix.min.js") : Url("affix.js");
+        public static readonly string alert_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/alert.min.js") ? Url("alert.min.js") : Url("alert.js");
+        public static readonly string bootstrap_rtl_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/bootstrap-rtl.min.js") ? Url("bootstrap-rtl.min.js") : Url("bootstrap-rtl.js");
         public static readonly string bootstrap_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/bootstrap.min.js") ? Url("bootstrap.min.js") : Url("bootstrap.js");
         public static readonly string bootstrap_min_js = Url("bootstrap.min.js");
+        public static readonly string button_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/button.min.js") ? Url("button.min.js") : Url("button.js");
+        public static readonly string carousel_rtl_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/carousel-rtl.min.js") ? Url("carousel-rtl.min.js") : Url("carousel-rtl.js");
+        public static readonly string collapse_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/collapse.min.js") ? Url("collapse.min.js") : Url("collapse.js");
+        public static readonly string dropdown_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/dropdown.min.js") ? Url("dropdown.min.js") : Url("dropdown.js");
+        public static readonly string jquery_1_10_2_intellisense_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery-1.10.2.intellisense.min.js") ? Url("jquery-1.10.2.intellisense.min.js") : Url("jquery-1.10.2.intellisense.js");
+        public static readonly string jquery_1_10_2_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery-1.10.2.min.js") ? Url("jquery-1.10.2.min.js") : Url("jquery-1.10.2.js");
+        public static readonly string jquery_1_10_2_min_js = Url("jquery-1.10.2.min.js");
+        public static readonly string jquery_1_10_2_min_map = Url("jquery-1.10.2.min.map");
         public static readonly string jquery_1_9_1_intellisense_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery-1.9.1.intellisense.min.js") ? Url("jquery-1.9.1.intellisense.min.js") : Url("jquery-1.9.1.intellisense.js");
         public static readonly string jquery_1_9_1_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery-1.9.1.min.js") ? Url("jquery-1.9.1.min.js") : Url("jquery-1.9.1.js");
         public static readonly string jquery_1_9_1_min_js = Url("jquery-1.9.1.min.js");
@@ -107,7 +123,45 @@ namespace Links
         public static readonly string jquery_validate_unobtrusive_min_js = Url("jquery.validate.unobtrusive.min.js");
         public static readonly string kendo_all_min_js = Url("kendo.all.min.js");
         public static readonly string kendo_data_min_js = Url("kendo.data.min.js");
+        public static readonly string modal_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/modal.min.js") ? Url("modal.min.js") : Url("modal.js");
+        public static readonly string modernizr_2_6_2_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/modernizr-2.6.2.min.js") ? Url("modernizr-2.6.2.min.js") : Url("modernizr-2.6.2.js");
         public static readonly string modernizr_2_8_3_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/modernizr-2.8.3.min.js") ? Url("modernizr-2.8.3.min.js") : Url("modernizr-2.8.3.js");
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class plugins {
+            public const string UrlPath = "~/Scripts/plugins";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class flot {
+                public const string UrlPath = "~/Scripts/plugins/flot";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+                public static readonly string excanvas_min_js = Url("excanvas.min.js");
+                public static readonly string flot_data_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/flot-data.min.js") ? Url("flot-data.min.js") : Url("flot-data.js");
+                public static readonly string jquery_flot_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery.flot.min.js") ? Url("jquery.flot.min.js") : Url("jquery.flot.js");
+                public static readonly string jquery_flot_pie_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery.flot.pie.min.js") ? Url("jquery.flot.pie.min.js") : Url("jquery.flot.pie.js");
+                public static readonly string jquery_flot_resize_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery.flot.resize.min.js") ? Url("jquery.flot.resize.min.js") : Url("jquery.flot.resize.js");
+                public static readonly string jquery_flot_tooltip_min_js = Url("jquery.flot.tooltip.min.js");
+            }
+        
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class morris {
+                public const string UrlPath = "~/Scripts/plugins/morris";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+                public static readonly string morris_data_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/morris-data.min.js") ? Url("morris-data.min.js") : Url("morris-data.js");
+                public static readonly string morris_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/morris.min.js") ? Url("morris.min.js") : Url("morris.js");
+                public static readonly string morris_min_js = Url("morris.min.js");
+                public static readonly string raphael_min_js = Url("raphael.min.js");
+            }
+        
+        }
+    
+        public static readonly string popover_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/popover.min.js") ? Url("popover.min.js") : Url("popover.js");
+        public static readonly string scrollspy_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/scrollspy.min.js") ? Url("scrollspy.min.js") : Url("scrollspy.js");
+        public static readonly string tab_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/tab.min.js") ? Url("tab.min.js") : Url("tab.js");
+        public static readonly string tooltip_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/tooltip.min.js") ? Url("tooltip.min.js") : Url("tooltip.js");
+        public static readonly string transition_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/transition.min.js") ? Url("transition.min.js") : Url("transition.js");
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -115,6 +169,7 @@ namespace Links
         public const string UrlPath = "~/Content";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+        public static readonly string bootstrap_rtl_min_css = Url("bootstrap-rtl.min.css");
         public static readonly string bootstrap_theme_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/bootstrap-theme.min.css") ? Url("bootstrap-theme.min.css") : Url("bootstrap-theme.css");
         public static readonly string bootstrap_theme_css_map = Url("bootstrap-theme.css.map");
         public static readonly string bootstrap_theme_min_css = Url("bootstrap-theme.min.css");
@@ -123,6 +178,17 @@ namespace Links
         public static readonly string bootstrap_css_map = Url("bootstrap.css.map");
         public static readonly string bootstrap_min_css = Url("bootstrap.min.css");
         public static readonly string bootstrap_min_css_map = Url("bootstrap.min.css.map");
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class css {
+            public const string UrlPath = "~/Content/css";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+            public static readonly string bootstrap_rtl_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/bootstrap-rtl.min.css") ? Url("bootstrap-rtl.min.css") : Url("bootstrap-rtl.css");
+            public static readonly string fontiran_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/fontiran.min.css") ? Url("fontiran.min.css") : Url("fontiran.css");
+            public static readonly string ltrPage_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/ltrPage.min.css") ? Url("ltrPage.min.css") : Url("ltrPage.css");
+            public static readonly string style_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/style.min.css") ? Url("style.min.css") : Url("style.css");
+        }
+    
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class Default {
             public const string UrlPath = "~/Content/Default";
@@ -142,6 +208,74 @@ namespace Links
             public static readonly string sprite_2x_png = Url("sprite_2x.png");
             public static readonly string sprite_kpi_png = Url("sprite_kpi.png");
             public static readonly string sprite_kpi_2x_png = Url("sprite_kpi_2x.png");
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class font_awesome {
+            public const string UrlPath = "~/Content/font-awesome";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class css {
+                public const string UrlPath = "~/Content/font-awesome/css";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+                public static readonly string font_awesome_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/font-awesome.min.css") ? Url("font-awesome.min.css") : Url("font-awesome.css");
+                public static readonly string font_awesome_min_css = Url("font-awesome.min.css");
+            }
+        
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class fonts {
+                public const string UrlPath = "~/Content/font-awesome/fonts";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+                public static readonly string fontawesome_webfont_eot = Url("fontawesome-webfont.eot");
+                public static readonly string fontawesome_webfont_svg = Url("fontawesome-webfont.svg");
+                public static readonly string fontawesome_webfont_ttf = Url("fontawesome-webfont.ttf");
+                public static readonly string fontawesome_webfont_woff = Url("fontawesome-webfont.woff");
+                public static readonly string FontAwesome_otf = Url("FontAwesome.otf");
+            }
+        
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class less {
+                public const string UrlPath = "~/Content/font-awesome/less";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+                public static readonly string bordered_pulled_less = Url("bordered-pulled.less");
+                public static readonly string core_less = Url("core.less");
+                public static readonly string fixed_width_less = Url("fixed-width.less");
+                public static readonly string font_awesome_less = Url("font-awesome.less");
+                public static readonly string icons_less = Url("icons.less");
+                public static readonly string larger_less = Url("larger.less");
+                public static readonly string list_less = Url("list.less");
+                public static readonly string mixins_less = Url("mixins.less");
+                public static readonly string path_less = Url("path.less");
+                public static readonly string rotated_flipped_less = Url("rotated-flipped.less");
+                public static readonly string spinning_less = Url("spinning.less");
+                public static readonly string stacked_less = Url("stacked.less");
+                public static readonly string variables_less = Url("variables.less");
+            }
+        
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class scss {
+                public const string UrlPath = "~/Content/font-awesome/scss";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+                public static readonly string _bordered_pulled_scss = Url("_bordered-pulled.scss");
+                public static readonly string _core_scss = Url("_core.scss");
+                public static readonly string _fixed_width_scss = Url("_fixed-width.scss");
+                public static readonly string _icons_scss = Url("_icons.scss");
+                public static readonly string _larger_scss = Url("_larger.scss");
+                public static readonly string _list_scss = Url("_list.scss");
+                public static readonly string _mixins_scss = Url("_mixins.scss");
+                public static readonly string _path_scss = Url("_path.scss");
+                public static readonly string _rotated_flipped_scss = Url("_rotated-flipped.scss");
+                public static readonly string _spinning_scss = Url("_spinning.scss");
+                public static readonly string _stacked_scss = Url("_stacked.scss");
+                public static readonly string _variables_scss = Url("_variables.scss");
+                public static readonly string font_awesome_scss = Url("font-awesome.scss");
+            }
+        
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -171,6 +305,22 @@ namespace Links
             }
         
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class eot {
+                public const string UrlPath = "~/Content/fonts/eot";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+                public static readonly string IRANSansWeb_eot = Url("IRANSansWeb.eot");
+                public static readonly string IRANSansWeb_Bold_eot = Url("IRANSansWeb_Bold.eot");
+                public static readonly string IRANSansWeb_Light_eot = Url("IRANSansWeb_Light.eot");
+                public static readonly string IRANSansWeb_Medium_eot = Url("IRANSansWeb_Medium.eot");
+                public static readonly string IRANSansWeb_UltraLight_eot = Url("IRANSansWeb_UltraLight.eot");
+            }
+        
+            public static readonly string glyphicons_halflings_regular_eot = Url("glyphicons-halflings-regular.eot");
+            public static readonly string glyphicons_halflings_regular_svg = Url("glyphicons-halflings-regular.svg");
+            public static readonly string glyphicons_halflings_regular_ttf = Url("glyphicons-halflings-regular.ttf");
+            public static readonly string glyphicons_halflings_regular_woff = Url("glyphicons-halflings-regular.woff");
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
             public static class glyphs {
                 public const string UrlPath = "~/Content/fonts/glyphs";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
@@ -183,6 +333,42 @@ namespace Links
                 public static readonly string WebComponentsIcons_svg = Url("WebComponentsIcons.svg");
                 public static readonly string WebComponentsIcons_ttf = Url("WebComponentsIcons.ttf");
                 public static readonly string WebComponentsIcons_woff = Url("WebComponentsIcons.woff");
+            }
+        
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class ttf {
+                public const string UrlPath = "~/Content/fonts/ttf";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+                public static readonly string IRANSansWeb_ttf = Url("IRANSansWeb.ttf");
+                public static readonly string IRANSansWeb_Bold_ttf = Url("IRANSansWeb_Bold.ttf");
+                public static readonly string IRANSansWeb_Light_ttf = Url("IRANSansWeb_Light.ttf");
+                public static readonly string IRANSansWeb_Medium_ttf = Url("IRANSansWeb_Medium.ttf");
+                public static readonly string IRANSansWeb_UltraLight_ttf = Url("IRANSansWeb_UltraLight.ttf");
+            }
+        
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class woff {
+                public const string UrlPath = "~/Content/fonts/woff";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+                public static readonly string IRANSansWeb_woff = Url("IRANSansWeb.woff");
+                public static readonly string IRANSansWeb_Bold_woff = Url("IRANSansWeb_Bold.woff");
+                public static readonly string IRANSansWeb_Light_woff = Url("IRANSansWeb_Light.woff");
+                public static readonly string IRANSansWeb_Medium_woff = Url("IRANSansWeb_Medium.woff");
+                public static readonly string IRANSansWeb_UltraLight_woff = Url("IRANSansWeb_UltraLight.woff");
+            }
+        
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class woff2 {
+                public const string UrlPath = "~/Content/fonts/woff2";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+                public static readonly string IRANSansWeb_woff2 = Url("IRANSansWeb.woff2");
+                public static readonly string IRANSansWeb_Bold_woff2 = Url("IRANSansWeb_Bold.woff2");
+                public static readonly string IRANSansWeb_Light_woff2 = Url("IRANSansWeb_Light.woff2");
+                public static readonly string IRANSansWeb_Medium_woff2 = Url("IRANSansWeb_Medium.woff2");
+                public static readonly string IRANSansWeb_UltraLight_woff2 = Url("IRANSansWeb_UltraLight.woff2");
             }
         
         }
@@ -200,6 +386,17 @@ namespace Links
         public static readonly string kendo_common_min_css = Url("kendo.common.min.css");
         public static readonly string kendo_default_min_css = Url("kendo.default.min.css");
         public static readonly string kendo_default_mobile_min_css = Url("kendo.default.mobile.min.css");
+        public static readonly string kendo_rtl_min_css = Url("kendo.rtl.min.css");
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class plugins {
+            public const string UrlPath = "~/Content/plugins";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+            public static readonly string morris_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/morris.min.css") ? Url("morris.min.css") : Url("morris.css");
+        }
+    
+        public static readonly string sb_admin_rtl_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/sb-admin-rtl.min.css") ? Url("sb-admin-rtl.min.css") : Url("sb-admin-rtl.css");
+        public static readonly string sb_admin_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/sb-admin.min.css") ? Url("sb-admin.min.css") : Url("sb-admin.css");
         public static readonly string Site_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/Site.min.css") ? Url("Site.min.css") : Url("Site.css");
     }
 
@@ -209,10 +406,48 @@ namespace Links
     {
         public static partial class Scripts 
         {
+            public static partial class plugins 
+            {
+                public static partial class flot 
+                {
+                    public static class Assets
+                    {
+                        public const string excanvas_min_js = "~/Scripts/plugins/flot/excanvas.min.js"; 
+                        public const string flot_data_js = "~/Scripts/plugins/flot/flot-data.js"; 
+                        public const string jquery_flot_js = "~/Scripts/plugins/flot/jquery.flot.js"; 
+                        public const string jquery_flot_pie_js = "~/Scripts/plugins/flot/jquery.flot.pie.js"; 
+                        public const string jquery_flot_resize_js = "~/Scripts/plugins/flot/jquery.flot.resize.js"; 
+                        public const string jquery_flot_tooltip_min_js = "~/Scripts/plugins/flot/jquery.flot.tooltip.min.js"; 
+                    }
+                }
+                public static partial class morris 
+                {
+                    public static class Assets
+                    {
+                        public const string morris_data_js = "~/Scripts/plugins/morris/morris-data.js"; 
+                        public const string morris_js = "~/Scripts/plugins/morris/morris.js"; 
+                        public const string morris_min_js = "~/Scripts/plugins/morris/morris.min.js"; 
+                        public const string raphael_min_js = "~/Scripts/plugins/morris/raphael.min.js"; 
+                    }
+                }
+                public static class Assets
+                {
+                }
+            }
             public static class Assets
             {
+                public const string affix_js = "~/Scripts/affix.js"; 
+                public const string alert_js = "~/Scripts/alert.js"; 
+                public const string bootstrap_rtl_js = "~/Scripts/bootstrap-rtl.js"; 
                 public const string bootstrap_js = "~/Scripts/bootstrap.js"; 
                 public const string bootstrap_min_js = "~/Scripts/bootstrap.min.js"; 
+                public const string button_js = "~/Scripts/button.js"; 
+                public const string carousel_rtl_js = "~/Scripts/carousel-rtl.js"; 
+                public const string collapse_js = "~/Scripts/collapse.js"; 
+                public const string dropdown_js = "~/Scripts/dropdown.js"; 
+                public const string jquery_1_10_2_intellisense_js = "~/Scripts/jquery-1.10.2.intellisense.js"; 
+                public const string jquery_1_10_2_js = "~/Scripts/jquery-1.10.2.js"; 
+                public const string jquery_1_10_2_min_js = "~/Scripts/jquery-1.10.2.min.js"; 
                 public const string jquery_1_9_1_intellisense_js = "~/Scripts/jquery-1.9.1.intellisense.js"; 
                 public const string jquery_1_9_1_js = "~/Scripts/jquery-1.9.1.js"; 
                 public const string jquery_1_9_1_min_js = "~/Scripts/jquery-1.9.1.min.js"; 
@@ -223,13 +458,62 @@ namespace Links
                 public const string jquery_validate_unobtrusive_min_js = "~/Scripts/jquery.validate.unobtrusive.min.js"; 
                 public const string kendo_all_min_js = "~/Scripts/kendo.all.min.js"; 
                 public const string kendo_data_min_js = "~/Scripts/kendo.data.min.js"; 
+                public const string modal_js = "~/Scripts/modal.js"; 
+                public const string modernizr_2_6_2_js = "~/Scripts/modernizr-2.6.2.js"; 
                 public const string modernizr_2_8_3_js = "~/Scripts/modernizr-2.8.3.js"; 
+                public const string popover_js = "~/Scripts/popover.js"; 
+                public const string scrollspy_js = "~/Scripts/scrollspy.js"; 
+                public const string tab_js = "~/Scripts/tab.js"; 
+                public const string tooltip_js = "~/Scripts/tooltip.js"; 
+                public const string transition_js = "~/Scripts/transition.js"; 
             }
         }
         public static partial class Content 
         {
+            public static partial class css 
+            {
+                public static class Assets
+                {
+                    public const string bootstrap_rtl_css = "~/Content/css/bootstrap-rtl.css";
+                    public const string fontiran_css = "~/Content/css/fontiran.css";
+                    public const string ltrPage_css = "~/Content/css/ltrPage.css";
+                    public const string style_css = "~/Content/css/style.css";
+                }
+            }
             public static partial class Default 
             {
+                public static class Assets
+                {
+                }
+            }
+            public static partial class font_awesome 
+            {
+                public static partial class css 
+                {
+                    public static class Assets
+                    {
+                        public const string font_awesome_css = "~/Content/font-awesome/css/font-awesome.css";
+                        public const string font_awesome_min_css = "~/Content/font-awesome/css/font-awesome.min.css";
+                    }
+                }
+                public static partial class fonts 
+                {
+                    public static class Assets
+                    {
+                    }
+                }
+                public static partial class less 
+                {
+                    public static class Assets
+                    {
+                    }
+                }
+                public static partial class scss 
+                {
+                    public static class Assets
+                    {
+                    }
+                }
                 public static class Assets
                 {
                 }
@@ -242,7 +526,31 @@ namespace Links
                     {
                     }
                 }
+                public static partial class eot 
+                {
+                    public static class Assets
+                    {
+                    }
+                }
                 public static partial class glyphs 
+                {
+                    public static class Assets
+                    {
+                    }
+                }
+                public static partial class ttf 
+                {
+                    public static class Assets
+                    {
+                    }
+                }
+                public static partial class woff 
+                {
+                    public static class Assets
+                    {
+                    }
+                }
+                public static partial class woff2 
                 {
                     public static class Assets
                     {
@@ -258,8 +566,16 @@ namespace Links
                 {
                 }
             }
+            public static partial class plugins 
+            {
+                public static class Assets
+                {
+                    public const string morris_css = "~/Content/plugins/morris.css";
+                }
+            }
             public static class Assets
             {
+                public const string bootstrap_rtl_min_css = "~/Content/bootstrap-rtl.min.css";
                 public const string bootstrap_theme_css = "~/Content/bootstrap-theme.css";
                 public const string bootstrap_theme_min_css = "~/Content/bootstrap-theme.min.css";
                 public const string bootstrap_css = "~/Content/bootstrap.css";
@@ -267,6 +583,9 @@ namespace Links
                 public const string kendo_common_min_css = "~/Content/kendo.common.min.css";
                 public const string kendo_default_min_css = "~/Content/kendo.default.min.css";
                 public const string kendo_default_mobile_min_css = "~/Content/kendo.default.mobile.min.css";
+                public const string kendo_rtl_min_css = "~/Content/kendo.rtl.min.css";
+                public const string sb_admin_rtl_css = "~/Content/sb-admin-rtl.css";
+                public const string sb_admin_css = "~/Content/sb-admin.css";
                 public const string Site_css = "~/Content/Site.css";
             }
         }
